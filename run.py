@@ -38,12 +38,12 @@ Examples:
     )
     parser.add_argument(
         '--korean-output', '-ko',
-        default='output/KO-Test_Highlighted.docx',
+        default='output/KO-Highlighted.docx',
         help='Output path for highlighted Korean document'
     )
     parser.add_argument(
         '--english-output', '-eo',
-        default='output/EN-Test_Highlighted.docx',
+        default='output/EN-Highlighted.docx',
         help='Output path for highlighted English document'
     )
     
@@ -68,6 +68,17 @@ Examples:
     print(f"\n📝 Output files:")
     print(f"  Korean:  {args.korean_output}")
     print(f"  English: {args.english_output}")
+    
+    # Check and create output directory if it doesn't exist
+    output_dir = os.path.dirname(args.korean_output)
+    if output_dir and not os.path.exists(output_dir):
+        try:
+            os.makedirs(output_dir, exist_ok=True)
+            print(f"\n✓ Created output directory: {output_dir}")
+        except OSError as e:
+            print(f"❌ Error: Could not create output directory: {output_dir}")
+            print(f"   Details: {e}")
+            sys.exit(1)
     
     # Check if dependencies are installed
     try:
